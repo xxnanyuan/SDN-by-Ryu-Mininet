@@ -1,4 +1,6 @@
 # SDN-by-Ryu-Mininet
+## timeline
+May 18 complete task 1 & 2
 
 ## Resource
 刘星圆:
