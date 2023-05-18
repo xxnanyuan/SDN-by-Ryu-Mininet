@@ -37,7 +37,6 @@ class Dijkstra:
 
         while True:
             if self.open_list is None:
-                print('搜索失败， 结束！')
                 break
             distance, min_node = min(zip(self.open_list.values(), self.open_list.keys()))      # 取出距离最小的节点
             self.open_list.pop(min_node)                                                       # 将其从 open_list 中去除
@@ -52,10 +51,7 @@ class Dijkstra:
                     shortest_path.append(father_node)
                     father_node = self.parent[father_node]
                 shortest_path.append(self.start)
-                print(shortest_path[::-1])                         # 逆序
-                print('最短路径的长度为：{}'.format(self.min_dis))
-                print('找到最短路径， 结束！')
-                return shortest_path[::-1], self.min_dis			# 返回最短路径和最短路径长度
+                return shortest_path[::-1]# 返回最短路径和最短路径长度
 
             for node in self.graph[min_node].keys():               # 遍历当前节点的邻接节点
                 if node not in self.closed_list.keys():            # 邻接节点不在 closed_list 中
@@ -69,43 +65,20 @@ class Dijkstra:
 
 
     
-g = {'1': {'2': 2, '4': 1},
-    '2': {'4': 3, '5': 11},
-    '3': {'1': 4, '6': 5},
-    '4': {'3': 2, '6': 8, '7': 4, '5': 2},
-    '6':{},
-    '5': {'7': 6},
-    '7': {'6': 1}
-}
-#here h1,h2,h3 = 
-def addedge(src, dst):
-    g[src][dst] = 1
-
-def cleardic(src):
-    g[src].clear()
-
-def deledge(src, dst):
-    g[src].pop(dst)
-
-def clearall():
-    for key in g.keys():
-        cleardic(key)
 
 
-
-if __name__ == '__main__':
-
-
-    start = '1'
-    goal = '6'
-    addedge('6', '7')
-    print(g)
-    deledge('3', '1')
-    print(g)
-    cleardic('5')
-    print(g)
-    dijk = Dijkstra(g, start, goal)
-    dijk.shortest_path()
-    clearall()
-    print(g)
+def dijk_g(g):
+    next_node={}
+    size=len(g)
     
+    for i in g:
+        next_node[i]={}
+        for j in g:
+            if i!=j:
+                try:
+                    dijk = Dijkstra(g, i, j)
+                    next_node[i][j]=dijk.shortest_path()[1]
+                except:
+                    next_node[i][j]=-1
+
+    return next_node
