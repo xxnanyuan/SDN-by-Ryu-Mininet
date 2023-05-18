@@ -1,6 +1,8 @@
-from mininet.cli import CLI
-from mininet.net import Mininet
-from mininet.node import RemoteController #远程控制器
+#Please use net_start.py, this file is abandoned
+
+#from mininet.cli import CLI
+#from mininet.net import Mininet
+#from mininet.node import RemoteController #远程控制器
 
 
 net = Mininet(controller=RemoteController) # 创建 Mininet 实例，指定控制器类型为 RemoteController
