@@ -33,6 +33,8 @@ while True:
     # 下发流表
     for src in LS_table:
         for dst in LS_table[src]:
+            if LS_table[src][dst]==-1:
+                continue
             match={"nw_dst":"223.1.%s.0/24"%dst,"dl_type":2048}
             actions=[{"type":"OUTPUT","port":int(output_port[src+LS_table[src][dst]])}]
             CallRestApi.add_flow_entry(src,match,1000,actions)
