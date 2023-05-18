@@ -39,6 +39,14 @@ c0.cmd(
 
 for i in range(3):
     hosts[i].cmd(f'ip route add default via 223.1.{i + 1}.1')
+# set defalut routes
+c0.cmd('''curl -X POST -d '{"gateway": "223.1.4.2"}' http://localhost:8080/router/0000000000000001''')
+c0.cmd('''curl -X POST -d '{"gateway": "223.1.5.2"}' http://localhost:8080/router/0000000000000002''')
+c0.cmd('''curl -X POST -d '{"gateway": "223.1.6.2"}' http://localhost:8080/router/0000000000000003''')
+# set static routes
+c0.cmd('''curl -X POST -d '{"destination": "223.1.3.0/24", "gateway": "223.1.6.1"}' http://localhost:8080/router/0000000000000001''')   
+c0.cmd('''curl -X POST -d '{"destination": "223.1.1.0/24", "gateway": "223.1.4.1"}' http://localhost:8080/router/0000000000000002''')   
+c0.cmd('''curl -X POST -d '{"destination": "223.1.2.0/24", "gateway": "223.1.5.1"}' http://localhost:8080/router/0000000000000003''')   
 
 CLI(net)
 
