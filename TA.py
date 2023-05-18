@@ -20,13 +20,14 @@ net.addLink(switches[1], switches[2], 3, 2)
 
 net.start()
 
+# 设置交换机的OpenFlow协议版本为OpenFlow13
 switches[0].cmd("ovs-vsctl set Bridge s1 protocols=OpenFlow13")
 
 switches[1].cmd("ovs-vsctl set Bridge s2 protocols=OpenFlow13")
 
 switches[2].cmd("ovs-vsctl set Bridge s3 protocols=OpenFlow13")
 
-
+# 配置主机的网络接口
 hosts[0].cmd("ip addr del 10.0.0.1/8 dev h1-eth0")
 hosts[0].cmd("ip addr add 172.16.20.10/24 dev h1-eth0")
 hosts[1].cmd("ip addr del 10.0.0.2/8 dev h2-eth0")
@@ -58,7 +59,7 @@ c0.cmd("ryu-manager ryu.app.rest_router")
 # switches[2].cmd('ip addr add 223.1.6.1/24 brd + dev s3-eth3')
 
 
-
+# 设置交换机和主机的路由器设置
 c0.cmd(
     ''' curl -X POST -d '{"address":"172.16.20.1/24"}' http://localhost:8080/router/0000000000000001 ''')
 c0.cmd(
@@ -81,10 +82,12 @@ c0.cmd(
 # for i in range(3):
 #     hosts[i].cmd(f'ip route add default via 223.1.{i + 1}.1')
 
+# 配置主机的默认网关
 hosts[0].cmd("ip route add default via 172.16.20.1")
 hosts[1].cmd("ip route add default via 172.16.10.1")
 hosts[2].cmd("ip route add default via 192.168.30.1")
 
+# 配置控制器的网关设置
 c0.cmd('''curl -X POST -d '{"gateway": "172.16.30.1"}' http://localhost:8080/router/0000000000000001''')
 c0.cmd('''curl -X POST -d '{"gateway": "172.16.30.30"}' http://localhost:8080/router/0000000000000002''')
 c0.cmd('''curl -X POST -d '{"gateway": "192.168.10.1"}' http://localhost:8080/router/0000000000000003''')
