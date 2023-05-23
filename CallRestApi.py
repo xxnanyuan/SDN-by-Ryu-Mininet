@@ -1,3 +1,11 @@
+'''
+Author: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+Date: 2023-05-20 23:09:55
+LastEditors: error: error: git config user.name & please set dead value or install git && error: git config user.email & please set dead value or install git & please set dead value or install git
+LastEditTime: 2023-05-23 16:25:46
+FilePath: \project\SDN-by-Ryu-Mininet-master\CallRestApi.py
+Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+'''
 # 此文件将rest api的调用封装起来
 # 关于rest api的具体情况请参考https://github.com/faucetsdn/ryu/blob/master/ryu/app文件夹下ofctl_rest.py、rest_router.py、rest_topology.py
 import requests 
@@ -53,3 +61,10 @@ def get_router(dpid):
     url = "http://localhost:8080/router/"+dpid
     req = requests.get(url).json()
     return req
+
+#修改路由信息
+def modify_flow_entry(dpid,match,priority,actions):
+    url = "http://127.0.0.1:8080/stats/flowentry/modify"
+    post_data = "{'dpid':%s,'match':%s,'priority':%s,'actions':%s}" % (dpid,str(match),priority,str(actions))
+    req = requests.post(url,data=post_data)
+    return req.status_code
