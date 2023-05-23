@@ -1,7 +1,6 @@
 import time
 import CallRestApi
 from dijk import dijk_g
-import routeWeight
 import copy
 # while true和time.sleep(5)结构配合使得每5秒计算一次静态路由，发送给交换机
 last_net={}
@@ -85,9 +84,8 @@ while True:
     bw,now_bytes=get_used_bandwidth(dpids)
     if (time.time()-last_time>=2):
         last_bytes=copy.deecopy(now_bytes)
-        cost=routeWeight.main(bw[0]*8/(10e6),bw[1]*8/(10e6),bw[2]*8/(10e6))
+        #cost=AFUNCTIONBYCYJ(bw[0]*8/(10e6),bw[1]*8/(10e6),bw[2]*8/(10e6))
         dpids,switches=get_route_info()
         topo_graph=create_graph(dpids,net,cost)
-        print(topo_graph)
         flow_table=calculate_flow_table(topo_graph)
         send_flow_table(flow_table,output_port)
