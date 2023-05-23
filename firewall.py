@@ -1,3 +1,15 @@
+# 在需要使用防火墙功能的文件顶部添加引入语句
+# from firewall import add_firewall_rule_block_ip, add_firewall_rule_block_destination, add_firewall_rule_block_keyword
+
+
+# 添加防火墙规则
+# add_firewall_rule_block_ip("0000000000000001", "10.0.0.1")
+# add_firewall_rule_block_destination("0000000000000002", "10.0.0.2")
+# add_firewall_rule_block_keyword("0000000000000003", "hack")
+
+
+
+
 import requests
 
 # 下发流表规则
@@ -68,10 +80,7 @@ def add_firewall_rule_block_keyword(switch_id, keyword):
 switches = {"0000000000000001": "223.1.1.1/24",
             "0000000000000002": "223.1.2.1/24", "0000000000000003": "223.1.3.1/24"}
 
-# 添加防火墙规则
-add_firewall_rule_block_ip("0000000000000001", "10.0.0.1")
-add_firewall_rule_block_destination("0000000000000002", "10.0.0.2")
-add_firewall_rule_block_keyword("0000000000000003", "hack")
+
 
 # 运行SDN网络
 # ...
