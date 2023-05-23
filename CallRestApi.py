@@ -7,7 +7,7 @@ FilePath: \project\SDN-by-Ryu-Mininet-master\CallRestApi.py
 Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
 '''
 # 此文件将rest api的调用封装起来
-# 关于rest api的具体情况请参考https://github.com/faucetsdn/ryu/blob/master/ryu/app文件夹下ofctl_rest.py、rest_router.py、rest_topology.py
+# 关于rest api的具体情况请参考https://github.com/faucetsdn/ryu/blob/master/ryu/app 文件夹下ofctl_rest.py、rest_router.py、rest_topology.py
 import requests 
 import json
 
