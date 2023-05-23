@@ -19,7 +19,7 @@ def delay_cal(x):
 
 
 def read_info(switches):
-    with open ("test.txt", "r")as f:
+    with open ("initial.txt", "r")as f:
         lst = f.read()
     print(lst)
     tmp = json.loads(lst)
