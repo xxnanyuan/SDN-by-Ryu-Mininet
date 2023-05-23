@@ -7,7 +7,23 @@
 # add_firewall_rule_block_destination("0000000000000002", "10.0.0.2")
 # add_firewall_rule_block_keyword("0000000000000003", "hack")
 
+# 启动 ryu-magager ryu.app.rest_firewall ryu.app.ofctl_rest ryu.app.rest_topology ryu.app.ws_topology --observe-links
 
+# 防火墙规则成功添加后print消息比如 Adding firewall rule to block packets containing keyword 'hack'
+
+# 测试防火墙规则生效情况：
+# 1.是否阻止来自 某主机ip 的数据包
+# 2.是否阻止试图访问 某主机ip 的数据包
+#     1.新开一个终端窗口
+#     2.连接到mn网络中的主机 
+#     mnexec -a mn -- bash -c 'ip netns exec h1 bash' h1主机的网络命名空间
+#     3.使用ping 命令 ping 10.0.0.2
+# 是否阻止来自h1 主机ip 10.0.0.1的数据包
+# 是否阻止试图访问 h2 主机ip10.0.0.2的数据包
+# 预期返回：destination host unreachable或者请求超时
+
+# 3.自定义字段的数据包
+# scapy或 hping 来构造自定义的数据包，并尝试发送包含关键字 "hack" 的数据包到目标主机 有问题
 
 
 import requests
