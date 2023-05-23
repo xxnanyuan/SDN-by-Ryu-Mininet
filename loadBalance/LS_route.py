@@ -1,6 +1,7 @@
 import time
 import CallRestApi
 from dijk import dijk_g
+import routeWeight
 import copy
 # while true和time.sleep(5)结构配合使得每5秒计算一次静态路由，发送给交换机
 last_net={}
@@ -59,14 +60,19 @@ def init_flow_table():
 
 init_flow_table()
 
-def get_used_bandwidth(dpids,last_bytes):
-    p_bytes={dpid:{iterm["actions"][0][-1]:iterm["byte_count"] for iterm in CallRestApi.get_flow_entries("dpid")["1"] if iterm["priority"]==10000} for dpid in dpids}
+def get_p_bytes(dpids,net):
+    p_bytes={}
+    for dpid in dpids:
+        p_bytes[dpid[-1]]={net["s"+dpid[-1]+"-eth"+iterm["actions"][0][-1]][1]:iterm["byte_count"] for iterm in CallRestApi.get_flow_entries(dpid[-1])[dpid[-1]] if iterm["priority"]==10000}
+    return p_bytes
 
+def get_used_bandwidth(dpids,last_bytes,net):
+    p_bytes=get_p_bytes(dpids,net)
     bw=[]
-    bw[0]=p_bytes["1"]["2"]+p_bytes["2"]["1"]-last_bytes["1"]["2"]-last_bytes["2"]["1"]
-    bw[1]=p_bytes["1"]["3"]+p_bytes["3"]["1"]-last_bytes["1"]["3"]-last_bytes["3"]["1"]
-    bw[2]=p_bytes["2"]["3"]+p_bytes["3"]["2"]-last_bytes["2"]["3"]-last_bytes["3"]["2"]
-    print(bw)
+    bw.append(p_bytes["1"]["2"]+p_bytes["2"]["1"]-last_bytes["1"]["2"]-last_bytes["2"]["1"])
+    bw.append(p_bytes["1"]["3"]+p_bytes["3"]["1"]-last_bytes["1"]["3"]-last_bytes["3"]["1"])
+    bw.append(p_bytes["2"]["3"]+p_bytes["3"]["2"]-last_bytes["2"]["3"]-last_bytes["3"]["2"])
+
     return bw,p_bytes
 
 last_time=time.time()
@@ -74,18 +80,21 @@ last_time=time.time()
 while True:
     net,output_port=get_net_info()
     cost=[1,1,1]
-    last_bytes={}
     if (net!=last_net):
         dpids,switches=get_route_info()
         last_net=copy.deepcopy(net)
         topo_graph=create_graph(dpids,net,cost)
         flow_table=calculate_flow_table(topo_graph)
         send_flow_table(flow_table,output_port)
-    bw,now_bytes=get_used_bandwidth(dpids)
+    last_bytes=get_p_bytes(dpids,net)
+    bw,now_bytes=get_used_bandwidth(dpids,last_bytes,net)
     if (time.time()-last_time>=2):
-        last_bytes=copy.deecopy(now_bytes)
-        #cost=AFUNCTIONBYCYJ(bw[0]*8/(10e6),bw[1]*8/(10e6),bw[2]*8/(10e6))
+        if (last_bytes==now_bytes):
+            continue
+        last_bytes=copy.deepcopy(now_bytes)
+        cost=routeWeight.main(bw[0]*8/(10e6),bw[1]*8/(10e6),bw[2]*8/(10e6))
         dpids,switches=get_route_info()
         topo_graph=create_graph(dpids,net,cost)
+        print(topo_graph)
         flow_table=calculate_flow_table(topo_graph)
         send_flow_table(flow_table,output_port)
