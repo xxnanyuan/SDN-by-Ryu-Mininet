@@ -7,7 +7,7 @@
 # add_firewall_rule_block_destination("0000000000000002", "10.0.0.2")
 # add_firewall_rule_block_keyword("0000000000000003", "hack")
 
-# 启动 ryu-magager ryu.app.rest_firewall ryu.app.ofctl_rest ryu.app.rest_topology ryu.app.ws_topology --observe-links
+# 启动 ryu-manager ryu.app.rest_firewall ryu.app.ofctl_rest ryu.app.rest_topology ryu.app.ws_topology --observe-links
 
 # 防火墙规则成功添加后print消息比如 Adding firewall rule to block packets containing keyword 'hack'
 
