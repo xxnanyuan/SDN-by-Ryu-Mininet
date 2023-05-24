@@ -54,10 +54,13 @@ def delete_flow_table(LS_table, output_port, priority=10000):
         for dst in LS_table[src]:
             if LS_table[src][dst]==-1:
                 continue
-            match={"nw_dst":"223.1.%s.0/24"%dst,"dl_type":2048}
-            actions=[{"type":"OUTPUT","port":int(output_port[src+LS_table[src][dst]])}]
-            CallRestApi.delete_flow_entry(src,match,priority,actions)
-
+            try:
+                match={"nw_dst":"223.1.%s.0/24"%dst,"dl_type":2048}
+                actions=[{"type":"OUTPUT","port":int(output_port[src+LS_table[src][dst]])}]
+                CallRestApi.delete_flow_entry(src,match,priority,actions)
+            except:
+                continue
+                
 def get_p_bytes(dpids,net):
     p_bytes={}
     for dpid in dpids:
