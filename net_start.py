@@ -1,7 +1,20 @@
 from mininet.cli import CLI
 from mininet.net import Mininet
 from mininet.node import RemoteController
+import json
 
+
+initial = []
+
+with open ("initial.txt", "r")as f:
+    lst = f.read()
+print(lst)
+tmp = json.loads(lst)
+print(tmp)
+for i in tmp.values():
+    initial.append(i)
+
+#带宽 时延 丢包率
 
 net = Mininet(controller=RemoteController)
 hosts = [net.addHost(f'h{i + 1}', ip=f'223.1.{i + 1}.2/24')
@@ -12,9 +25,9 @@ c0 = net.addController('c0')
 net.addLink(switches[0], hosts[0])
 net.addLink(switches[1], hosts[1])
 net.addLink(switches[2], hosts[2])
-net.addLink(switches[0], switches[1])
-net.addLink(switches[1], switches[2])
-net.addLink(switches[2], switches[0])
+net.addLink(switches[0], switches[1], bw = initial[0][0] , delay =f'{initial[0][1]}ms' , loss =initial[0][2] )
+net.addLink(switches[1], switches[2], bw = initial[2][0], delay =f'{initial[2][1]}ms' , loss =initial[2][2])
+net.addLink(switches[2], switches[0], bw = initial[1][0], delay =f'{initial[1][1]}ms' , loss =initial[1][2])
 
 net.start()
 

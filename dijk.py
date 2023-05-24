@@ -65,10 +65,8 @@ class Dijkstra:
 
 
     
-# 将dijk封装起来，输入为一个二维字典，代表着网络链路的结构图，dict[src][dst]=cost，
-# src为发出路由，dst为目的路由，cost为这条边的花费，因为以跳数为花费，cost默认为1
-# 输出为一个二维字典dict[src][dst]=src_next，即从src到达dst的最短路径中src下一个节点是是什么，路由器据此将网络封包转发到那里
-# comment by xxnanyuan
+
+
 def dijk_g(g):
     next_node={}
     size=len(g)
@@ -84,3 +82,4 @@ def dijk_g(g):
                     next_node[i][j]=-1
 
     return next_node
+
