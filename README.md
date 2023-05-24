@@ -1,6 +1,7 @@
 # SDN-by-Ryu-Mininet
 ## timeline
 - May 18 21:30 complete task 1 & 2 
+- May 24 22:00 complete load balance
 
 ## Resource
 刘星圆:
