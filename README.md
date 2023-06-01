@@ -55,5 +55,4 @@ To install the dependent of latest ryu. But the version of ryu and eventlet is c
 ### 艾骥:
 - [防火牆（ Firewall ） — Ryubook 1.0 說明文件](https://osrg.github.io/ryu-book/zh_tw/html/rest_firewall.html)
 - [source code](https://github.com/faucetsdn/ryu/blob/master/ryu/app/rest_firewall.py)
-- https://blog.csdn.net/qq_44807756/article/details/127915755
 - http://pzengseu.github.io/2016/01/24/SDN/ryu-firewall/
