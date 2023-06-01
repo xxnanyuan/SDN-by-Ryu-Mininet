@@ -3,6 +3,7 @@
 - May 18 21:30 complete task 1 & 2 
 - May 23 17:00 complete task 3
 - May 24 22:00 complete load balance
+- June 02 morning complete firewall
 
 ## environment
 for python 3.9- version:
