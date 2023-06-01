@@ -6,8 +6,9 @@ from dijk import dijk_g
 # 防火墙和入侵检测功能
 # 规则1 拒绝来自 h1（IP 地址为 223.1.1.2）的数据包
 # 规则2 拒绝发送到 h1（IP 地址为 223.1.1.2）的数据包
-# 规则3 拒绝传输层协议为 TCP、载荷包含hack 的数据包
+# 规则3 拒绝传输层协议为 TCP、载荷包含 hack 的数据包
 
+# 通过调用 CallRestApi，先得到网络拓扑和交换机信息
 switches = {}
 net = {}
 output_port = {}
@@ -15,14 +16,14 @@ dpids = []
 
 
 
-# 获取了链路信息，存在 net 字典
+
 for switch in CallRestApi.get_all_switches():
     router = CallRestApi.get_router(switch["dpid"])
     dpids.append(switch["dpid"])
     switches[switch["dpid"]] = {port["name"]: router[0]["internal_network"][0]["address"][int(
         port["name"][-1])-1]["address"] for port in switch["ports"]}
 
-# 获取switch和router的信息，存在 switches 字典
+
 for item in CallRestApi.get_all_links():
     net[item["src"]["name"]] = item["dst"]["name"]
     output_port[item["src"]["name"][1]+item["dst"]
