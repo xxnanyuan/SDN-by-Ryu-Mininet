@@ -1,7 +1,7 @@
 import CallRestApi
 from dijk import dijk_g
 # 开启
-# 先net_start.py以及LS_route.py，mininet 里测试 ping
+# 先net_start.py以及LS_route.py，再 mininet 里测试 ping 录屏https://jbox.sjtu.edu.cn/v/link/view/b85156d213134d39b0159bb9ed9cea6f
 
 # 防火墙和入侵检测功能
 # 规则1 拒绝来自 h1（IP 地址为 223.1.1.2）的数据包
