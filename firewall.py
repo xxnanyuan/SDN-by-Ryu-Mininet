@@ -1,12 +1,11 @@
 import CallRestApi
 from dijk import dijk_g
 # 开启
-# 先net_start.py以及LS_route.py，再 mininet 里测试 ping 录屏https://jbox.sjtu.edu.cn/v/link/view/b85156d213134d39b0159bb9ed9cea6f
+# 先net_start.py以及LS_route.py，再 mininet 里测试 ping 录屏(含配音)：https://jbox.sjtu.edu.cn/l/M14C7P
 
 # 防火墙和入侵检测功能
 # 规则1 拒绝来自 h1（IP 地址为 223.1.1.2）的数据包
 # 规则2 拒绝发送到 h1（IP 地址为 223.1.1.2）的数据包
-# 规则3 拒绝传输层协议为 TCP、载荷包含 hack 的数据包
 
 # 通过调用 CallRestApi，先得到网络拓扑和交换机信息
 switches = {}
@@ -50,11 +49,7 @@ for src in LS_table:
     actions = []
     CallRestApi.add_flow_entry(src, match, 1000, actions)
 
-    match = {"dl_type": 2048, "nw_proto": 6, "tcp_payload": "hack"}
-    actions = []
-    CallRestApi.add_flow_entry(src, match, 1000, actions)   # 拒绝TCP 载荷包含关键字 "hack"的数据包
-
   # 匹配协议类型为 IPv4（"dl_type": 2048）
   # 传输层协议类型为 TCP（"nw_proto": 6）
-  # 三个防火墙规则
+  # 2 个防火墙规则
 
