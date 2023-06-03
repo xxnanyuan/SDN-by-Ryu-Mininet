@@ -30,8 +30,7 @@ To install the dependent of latest ryu. But the version of ryu and eventlet is c
 - routeWeight.py: compute the cost of all links by a function related to delay, bandwidth and loss.
 - CallRestApi.py: Encapsulate rest api function.
 ### firewall
-- task3.py
-- firewall.py 
+- firewall.py: implement rule enforcement via REST API calls and flow table entries.
 
 ## Resource
 ### 刘星圆:
